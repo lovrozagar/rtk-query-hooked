@@ -66,7 +66,7 @@ type UseMutationData<
 
 type RTKHookedEvents<T> = {
   onSettled?: () => void;
-  onSuccess?: (data: NonNullable<T>) => void;
+  onSuccess?: (data: T) => void;
   onError?: (error: unknown) => void;
 };
 
