@@ -10,4 +10,8 @@ function useFreshRef<T>(input: T): MutableRefObject<T> {
   return ref;
 }
 
+type UseFreshRefReturn = ReturnType<typeof useFreshRef>;
+
 export { useFreshRef };
+
+export type { UseFreshRefReturn };
