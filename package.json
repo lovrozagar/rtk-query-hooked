@@ -1,6 +1,6 @@
 {
   "name": "rtk-query-hooked",
-  "version": "1.0.0.",
+  "version": "1.0.0",
   "private": false,
   "description": "Wrapper library for Redux Toolkit Query with useful hooks and types.",
   "license": "MIT",
