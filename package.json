@@ -1,0 +1,44 @@
+{
+  "name": "rtk-query-hooked",
+  "version": "0.0.1",
+  "private": false,
+  "description": "Wrapper library for Redux Toolkit Query with useful hooks and types.",
+  "license": "MIT",
+  "author": "Lovro Žagar",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      }
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "bunchee -m"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "bunchee": "^5.1.5",
+    "eslint": "^8.57.0",
+    "eslint-config-hardcore": "^45.3.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-redux": "^9.1.0",
+    "@reduxjs/toolkit": "^2.1.0"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-redux": "^9.1.0",
+    "@reduxjs/toolkit": "^2.1.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
