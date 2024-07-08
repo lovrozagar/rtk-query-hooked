@@ -8,6 +8,34 @@ Passed events do not need to be memoized as they are always fresh internally, fo
 
 Be able to easily infer data that an RTK Query hook returns with UseQueryData and UseMutationData types. (Can be difficult to achieve otherwise)
 
+# Table of Contents
+
+- [rtk-query-hooked](#rtk-query-hooked)
+  - [Installation](#installation)
+  - [Usage](#usage)
+    - [useQuery](#usequery)
+      - [Import](#import)
+      - [Usage Example](#usage-example)
+    - [useMutation](#usemutation)
+      - [Import](#import-1)
+      - [Usage Example](#usage-example-1)
+  - [API](#api)
+    - [useQuery](#usequery-1)
+      - [Props](#props)
+      - [Returns](#returns)
+    - [useMutation](#usemutation-1)
+      - [Props](#props-1)
+      - [Returns](#returns-1)
+  - [Types](#types)
+    - [UseQueryProps](#usequeryprops)
+    - [UseMutationProps](#usemutationprops)
+    - [RTKQueryHook](#rtkqueryhook)
+    - [RTKMutationHook](#rtkmutationhook)
+    - [UseQueryData](#usequerydata)
+    - [UseMutationData](#usemutationdata)
+    - [RTKHookedEvents](#rtkhookedevents)
+  - [License](#license)
+
 ## Installation
 
 `npm install rtk-query-hooked`
@@ -24,23 +52,25 @@ The `useQuery` hook is a wrapper around the RTK Query hook that provides additio
 
 #### Usage Example
 
-`import { useQuery } from 'rtk-query-hooked';`
-`import { useGetSomethingQuery } from './api';`
-`import { toast } from './toast';`
+```
+import { useQuery } from 'rtk-query-hooked';
+import { useGetSomethingQuery } from './api';
+import { toast } from './toast';
 
-`const MyComponent = () => {`
-`  const { data, error, isLoading } = useQuery({`
-`    hook: useGetSomethingQuery,`
-`    request: { id: 1 },`
-`    onSuccess: (data) => toast.success('Fetched ' + data.name + ' successfully.'),`
-`    onError: (error) => toast.error('Error fetching data: ', error.message),`
-`  });`
+const MyComponent = () => {
+  const { data, error, isLoading } = useQuery({
+    hook: useGetSomethingQuery,
+    request: { id: 1 },
+    onSuccess: (data) => toast.success('Fetched ' + data.name + ' successfully.'),
+    onError: (error) => toast.error('Error fetching data: ', error.message),
+  });
 
-`  if (isLoading) return <div>Loading...</div>;`
-`  if (error) return <div>Error: {error.message}</div>;`
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
 
-`  return data ? <pre>Updated Data: {JSON.stringify(data, null, 2)}</pre> : null`
-`};`
+  return data ? <pre>Updated Data: {JSON.stringify(data, null, 2)}</pre> : null
+};
+```
 
 ### useMutation
 
@@ -48,35 +78,37 @@ The `useMutation` hook is a wrapper around the RTK Query mutation hook that prov
 
 #### Import
 
-`import { useMutation } from 'rtk-query-hooked';`
+```import { useMutation } from 'rtk-query-hooked';```
 
 #### Usage Example
 
-`import { useMutation } from 'rtk-query-hooked';`
-`import { useUpdateSomethingMutation } from './api';`
-`import { toast } from './toast';`
+```
+import { useMutation } from 'rtk-query-hooked';`
+import { useUpdateSomethingMutation } from './api';`
+import { toast } from './toast';`
 
-`const MyComponent = () => {`
-`  const [trigger, { data, error, isLoading }] = useMutation({`
-`    hook: useUpdateSomethingMutation,`
-`    onSuccess: (data) => toast.success('Updated ' + data.name + ' successfully.'),`
-`    onError: (error) => toast.error('Error fetching data: ', error.message),`
-`  });`
+const MyComponent = () => {
+  const [trigger, { data, error, isLoading }] = useMutation({
+    hook: useUpdateSomethingMutation,
+    onSuccess: (data) => toast.success('Updated ' + data.name + ' successfully.'),
+    onError: (error) => toast.error('Error fetching data: ', error.message),
+  });`
 
-`  const handleUpdate = () => {`
-`    trigger({ id: 1, value: 'newValue' });`
-`  };`
+  const handleUpdate = () => {
+    trigger({ id: 1, value: 'newValue' });
+  };
 
-`  if (isLoading) return <div>Updating...</div>;`
-`  if (error) return <div>Error: {error.message}</div>;`
+  if (isLoading) return <div>Updating...</div>;
+  if (error) return <div>Error: {error.message}</div>;
 
-`  return (`
-`    <div>`
-`      <button onClick={handleUpdate}>Update</button>`
-`      {data ? <pre>Updated Data: {JSON.stringify(data, null, 2)}</pre>} : null`
-`    </div>`
-`  );`
-`};`
+  return (
+    <div>
+      <button onClick={handleUpdate}>Update</button>
+      {data ? <pre>Updated Data: {JSON.stringify(data, null, 2)}</pre>} : null
+    </div>
+  );
+};
+```
 
 ## API
 
@@ -112,21 +144,25 @@ An array containing the trigger function and the response object from the RTK Qu
 
 ### `UseQueryProps`
 
-`type UseQueryProps<QueryArg, BaseQuery extends BaseQueryFn, ResultType> = {`
-`  hook: RTKQueryHook<QueryArg, BaseQuery, ResultType>;`
-`  request:`
-`    | Parameters<RTKQueryHook<QueryArg, BaseQuery, ResultType>>[0]`
-`    | (() => Parameters<RTKQueryHook<QueryArg, BaseQuery, ResultType>>[0]);`
-`  options?:`
-`    | Parameters<RTKQueryHook<QueryArg, BaseQuery, ResultType>>[1]`
-`    | (() => Parameters<RTKQueryHook<QueryArg, BaseQuery, ResultType>>[1]);`
-`} & RTKHookedEvents<UseQueryData<QueryArg, BaseQuery, ResultType>>;`
+```
+type UseQueryProps<QueryArg, BaseQuery extends BaseQueryFn, ResultType> = {
+  hook: RTKQueryHook<QueryArg, BaseQuery, ResultType>;
+  request:
+    | Parameters<RTKQueryHook<QueryArg, BaseQuery, ResultType>>[0]
+    | (() => Parameters<RTKQueryHook<QueryArg, BaseQuery, ResultType>>[0]);
+  options?:
+    | Parameters<RTKQueryHook<QueryArg, BaseQuery, ResultType>>[1]
+    | (() => Parameters<RTKQueryHook<QueryArg, BaseQuery, ResultType>>[1]);
+} & RTKHookedEvents<UseQueryData<QueryArg, BaseQuery, ResultType>>;
+```
 
 ### `UseMutationProps`
 
-`type UseMutationProps<QueryArg, BaseQuery extends BaseQueryFn, ResultType> = {`
-`  hook: RTKMutationHook<QueryArg, BaseQuery, ResultType>;`
-`} & RTKHookedEvents<UseMutationData<QueryArg, BaseQuery, ResultType>>;`
+```
+type UseMutationProps<QueryArg, BaseQuery extends BaseQueryFn, ResultType> = {
+  hook: RTKMutationHook<QueryArg, BaseQuery, ResultType>;
+} & RTKHookedEvents<UseMutationData<QueryArg, BaseQuery, ResultType>>;
+```
 
 ### `RTKQueryHook`
 
